@@ -8,6 +8,7 @@ dependencies = [
     "dagster",
     "dagster-cloud",
     "dagster-dbt",
+    "dagster-duckdb>=0.26.19",
     "dbt-duckdb<1.10",
 ]
 
@@ -23,3 +24,8 @@ build-backend = "setuptools.build_meta"
 [tool.dagster]
 module_name = "local_dagster.definitions"
 code_location_name = "local_dagster"
+
+[dependency-groups]
+dev = [
+    "dagster-webserver>=1.10.19",
+]
