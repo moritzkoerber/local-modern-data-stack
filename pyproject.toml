@@ -11,6 +11,8 @@ dependencies = [
     "dbt-core>=1.9.4",
     "dbt-duckdb>=1.9.3",
     "duckdb>=1.2.2",
+    "polars>=1.30.0",
+    "requests>=2.32.3",
 ]
 
 [dependency-groups]

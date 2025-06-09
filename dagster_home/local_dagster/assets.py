@@ -5,6 +5,8 @@ Asset key or unique identifier.
 An op which is a function that is invoked to produce the asset.
 Upstream dependencies that the asset depends on."""
 
+import polars as pl
+import requests
 from dagster import AssetCheckResult, AssetExecutionContext, asset, asset_check
 from dagster_dbt import DbtCliResource, dbt_assets
 from dagster_duckdb import DuckDBResource
@@ -27,6 +29,14 @@ def area1(context: AssetExecutionContext, duckdb: DuckDBResource) -> None:
         result = conn.execute(f"select count(*) from {schema}.{table_name}").fetchone()
         # Log some metadata about the table we just wrote
         context.add_output_metadata({"num_rows": result[0]})
+
+
+@asset(compute_kind="python", group_name="ingest")
+def covid19_data_rki(context: AssetExecutionContext) -> pl.DataFrame:
+    response = requests.get("https://api.corona-zahlen.org/germany", timeout=180)
+    df = pl.json_normalize(response.json())
+    df.with_columns(pl.lit(df["meta.lastUpdate"][0].split("T")[0]).alias("date"))
+    return df
 
 
 @asset_check(asset=area1)
