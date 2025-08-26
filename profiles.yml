@@ -3,6 +3,6 @@ duckdb:
     dev:
       type: duckdb
       path: "db.duckdb"
-      # plugins:
-      #   - module: delta
+      plugins:
+        - module: delta
   target: dev

@@ -1,27 +1,16 @@
 version: 2
 
 sources:
-  - name: raw_data
+  - name: covid19
+    config:
+      plugin: delta
     tables:
-      - name: area1
-        description: "Raw input data"
+      - name: germany
         meta:
-          external_location: "data/area1_small.parquet"
+          delta_table_path: "dagster_home/data/bronze/germany"
+          dagster:
+            asset_key: ["bronze", "covid19_data_rki"]
         columns:
-          - name: Z
+          - name: "meta.lastUpdate"
             tests:
               - not_null
-  - name: area1
-    schema: local
-    tables:
-      - name: area1
-        meta:
-          dagster:
-            asset_key: ["area1"]
-  - name: covid19
-    schema: local
-    tables:
-      - name: covid19_data_rki
-        meta:
-          dagster:
-            asset_key: ["covid19_data_rki"]

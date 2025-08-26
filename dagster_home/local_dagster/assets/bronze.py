@@ -8,7 +8,7 @@ from deltalake.exceptions import TableNotFoundError
 def covid19_data_rki() -> None:
     response = requests.get("https://api.corona-zahlen.org/germany", timeout=180)
     df = pl.json_normalize(response.json())
-
+    print(f"got {df.head()}")
     try:
         df.write_delta(
             "data/bronze/germany",
