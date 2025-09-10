@@ -1,0 +1,9 @@
+models:
+  - name: gold_covid
+    description: "unified COVID data"
+    columns:
+      - name: meta_lastupdate
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null

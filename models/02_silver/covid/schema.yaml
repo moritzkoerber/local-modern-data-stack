@@ -1,0 +1,9 @@
+models:
+  - name: silver_covid
+    description: "standardized COVID data"
+    columns:
+      - name: meta_lastupdate
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
