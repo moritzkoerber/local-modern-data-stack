@@ -1,4 +1,7 @@
-"""This file centralizes the definitions of your Dagster assets, schedules, and resources, making them available to Dagster tools like the UI and CLI."""
+"""
+This file centralizes the definitions of your Dagster assets, schedules, and resources,
+making them available to Dagster tools like the UI and CLI.
+"""
 
 from dagster import Definitions
 from dagster_dbt import DbtCliResource

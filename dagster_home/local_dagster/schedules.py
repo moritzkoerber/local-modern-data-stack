@@ -1,4 +1,7 @@
-"""This module defines schedules for automatically running Dagster jobs, such as materializing dbt models at specified times."""
+"""
+This module defines schedules for automatically running Dagster jobs, such as
+materializing dbt models at specified times.
+"""
 
 from dagster import AssetSelection, ScheduleDefinition
 from dagster_dbt import build_schedule_from_dbt_selection

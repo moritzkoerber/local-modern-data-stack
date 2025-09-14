@@ -24,5 +24,5 @@ def covid19_data_rki() -> None:
             },
         ).when_not_matched_insert_all().execute()
     except TableNotFoundError:
-        # If table doesn't exist, create it first
+        # If the table doesn't exist, create it first
         df.write_delta("data/bronze/germany", mode="overwrite")
