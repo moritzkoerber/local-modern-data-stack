@@ -8,4 +8,4 @@ from ..project import local_dagster
 # project, effectively running all your dbt models and tests.
 @dbt_assets(manifest=local_dagster.manifest_path)
 def dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
-    yield from dbt.cli(["build"], context=context).stream()
+    yield from dbt.cli(["build"], context=context).stream().fetch_row_counts()
