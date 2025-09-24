@@ -9,3 +9,4 @@ logs/
 *.egg-info
 *.duckdb
 .venv
+*.json

@@ -7,7 +7,7 @@ sources:
     tables:
       - name: germany
         meta:
-          delta_table_path: "/Users/moritz/Documents/local-modern-data-stack/dagster_home/data/bronze/germany"
+          delta_table_path: "/Users/moritz/Documents/local-modern-data-stack/data/bronze/germany"
           dagster:
             asset_key: ["bronze", "covid19_data_rki"]
         columns:

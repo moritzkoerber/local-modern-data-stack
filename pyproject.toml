@@ -5,22 +5,20 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "dagster>=1.10.12",
-    "dagster-dbt>=0.26.12",
-    "dagster-duckdb>=0.26.19",
-    "dbt-core>=1.9.4",
-    "dbt-duckdb>=1.9.3",
-    "deltalake>=1.1.4",
-    "duckdb>=1.2.2",
-    "plotly[express]>=6.1.2",
-    "polars[pyarrow]>=1.30.0",
-    "requests>=2.32.3",
+    "dagster~=1.10.12",
+    "dagster-dbt~=0.26.12",
+    "dagster-duckdb~=0.26.19",
+    "dbt-core~=1.9.4",
+    "dbt-duckdb~=1.9.3",
+    "deltalake~=1.1.4",
+    "duckdb~=1.2.2",
+    "plotly[express]~=6.1.2",
+    "polars[pyarrow]~=1.30.0",
+    "requests~=2.32.3",
 ]
 
 [dependency-groups]
-dev = [
-    "dagster-webserver>=1.10.19",
-]
+dev = ["dagster-webserver~=1.10.19", "dagster-dg-cli~=1.10.21", "prek>=0.2.1"]
 
 
 [tool.ruff]
@@ -38,10 +36,20 @@ select = [
     "ANN", # function annotations
     "B",   # bugbear
     "A",   # built-ins
-    "DTZ", # flake8-datetimez
 ]
 
 ignore = ["E501", "B905"]
 
 [tool.ruff.lint.flake8-annotations]
 suppress-none-returning = true
+
+[tool.dg]
+directory_type = "project"
+
+[tool.dg.project]
+root_module = "local_modern_data_stack"
+registry_modules = ["local_modern_data_stack.components.*"]
+
+[tool.pyrefly]
+project-includes = ["**/*"]
+project-excludes = ["**/__pycache__", "**/*venv/**/*"]
