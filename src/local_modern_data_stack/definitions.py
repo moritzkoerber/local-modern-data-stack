@@ -11,7 +11,7 @@ from dagster_duckdb import DuckDBResource
 from .defs.assets.bronze import covid19_data_rki
 from .defs.assets.dbt import dbt_assets
 from .defs.assets.presentation import cases_barchart
-from .project import local_dagster
+from .defs.project import local_dagster
 from .schedules import schedules
 
 defs = Definitions(

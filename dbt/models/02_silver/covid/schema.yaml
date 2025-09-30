@@ -6,8 +6,7 @@ models:
         group: silver
     data_tests:
       - dbt_expectations.expect_table_row_count_to_be_between:
-          arguments:
-            min_value: 1
+          min_value: 1
     columns:
       - name: meta_lastupdate
         description: "The primary key for this table"

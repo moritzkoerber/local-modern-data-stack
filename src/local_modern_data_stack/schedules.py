@@ -6,7 +6,7 @@ materializing dbt models at specified times.
 from dagster import AssetSelection, ScheduleDefinition
 from dagster_dbt import build_schedule_from_dbt_selection
 
-from .assets.dbt import dbt_assets
+from .defs.assets.dbt import dbt_assets
 
 dbt_schedule = build_schedule_from_dbt_selection(
     [dbt_assets],
