@@ -10,14 +10,14 @@ from dagster import (
 from dagster_dbt import get_asset_key_for_model
 from dagster_duckdb import DuckDBResource
 
-from .dbt import dbt_assets
+from .dbt import dbt_models
 
 
 @asset(
     kinds={"python"},
     group_name="presentation",
     key_prefix=["presentation"],
-    deps=[get_asset_key_for_model([dbt_assets], "gold_covid")],
+    deps=[get_asset_key_for_model([dbt_models], "gold_covid")],
 )
 def cases_barchart(context: AssetExecutionContext, duckdb: DuckDBResource) -> None:
     with duckdb.get_connection() as conn:
