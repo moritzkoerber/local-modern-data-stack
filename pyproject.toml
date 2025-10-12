@@ -18,8 +18,12 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["dagster-webserver~=1.10.19", "dagster-dg-cli~=1.10.21", "prek>=0.2.1"]
-
+dev = [
+    "dagster-webserver~=1.10.19",
+    "dagster-dg-cli~=1.10.21",
+    "prek>=0.2.1",
+    "sqlfluff-templater-dbt>=3.4.2",
+]
 
 [tool.ruff]
 fix = true
@@ -50,6 +54,17 @@ directory_type = "project"
 root_module = "local_modern_data_stack"
 registry_modules = ["local_modern_data_stack.components.*"]
 
-[tool.pyrefly]
-project-includes = ["**/*"]
-project-excludes = ["**/__pycache__", "**/*venv/**/*"]
+[tool.sqlfluff.core]
+dialect = "duckdb"
+templater = "dbt"
+exclude_rules = ["L031", "L034"]
+
+[tool.sqlfluff.templater.dbt]
+project_dir = "dbt"
+profiles_dir = "dbt"
+
+[tool.sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "upper"
+
+[tool.sqlfluff.rules.capitalisation.identifiers]
+capitalisation_policy = "lower"

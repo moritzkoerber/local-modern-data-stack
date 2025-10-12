@@ -29,14 +29,23 @@ WITH src AS (
         CAST("r.rValue7Days.date" AS TIMESTAMP) AS r_rvalue7days_date,
         CAST("r.lastUpdate" AS TIMESTAMP) AS r_lastupdate,
         CAST("hospitalization.date" AS TIMESTAMP) AS hospitalization_date,
-        CAST("hospitalization.lastUpdate" AS TIMESTAMP) AS hospitalization_lastupdate,
+        CAST("hospitalization.lastUpdate" AS TIMESTAMP)
+            AS hospitalization_lastupdate,
         CAST("meta.lastUpdate" AS TIMESTAMP) AS meta_lastupdate,
-        CAST("meta.lastCheckedForUpdate" AS TIMESTAMP) AS meta_lastcheckedforupdate,
+        CAST("meta.lastCheckedForUpdate" AS TIMESTAMP)
+            AS meta_lastcheckedforupdate,
         CURRENT_DATE() AS run_date
     FROM {{ source("covid19", "germany") }}
     {% if is_incremental() %}
-      WHERE CAST(meta_lastupdate AS TIMESTAMP) >
-            (SELECT COALESCE(MAX(meta_lastupdate), TIMESTAMP '1900-01-01 00:00:00') FROM {{ this }})
+        WHERE
+            CAST(meta_lastupdate AS TIMESTAMP)
+            > (
+                SELECT
+                    COALESCE(
+                        MAX(t.meta_lastupdate), TIMESTAMP '1900-01-01 00:00:00'
+                    )
+                FROM {{ this }} AS t
+            )
     {% endif %}
 )
 
