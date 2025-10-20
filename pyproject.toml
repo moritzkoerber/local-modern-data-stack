@@ -21,8 +21,10 @@ dependencies = [
 dev = [
     "dagster-webserver~=1.10.19",
     "dagster-dg-cli~=1.10.21",
-    "prek>=0.2.1",
-    "sqlfluff-templater-dbt>=3.4.2",
+    "prek~=0.2.1",
+    "sqlfluff-templater-dbt~=3.4.2",
+    "pyrefly~=0.37.0",
+    "sqlfluff~=3.4.2",
 ]
 
 [tool.ruff]
@@ -68,3 +70,7 @@ capitalisation_policy = "upper"
 
 [tool.sqlfluff.rules.capitalisation.identifiers]
 capitalisation_policy = "lower"
+
+[tool.pyrefly]
+project-includes = ["**/*"]
+project-excludes = ["**/__pycache__", "**/*venv/**/*"]

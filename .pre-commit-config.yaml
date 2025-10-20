@@ -8,7 +8,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.0
+    rev: v0.14.1
     hooks:
       - id: ruff-check
       - id: ruff-format
@@ -20,7 +20,7 @@ repos:
         args: [-d, "{rules: {document-start: disable}}"]
 
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.4.2
+    rev: 3.5.0
     hooks:
       - id: sqlfluff-lint
         additional_dependencies:
@@ -34,3 +34,10 @@ repos:
         args:
           - --dialect
           - duckdb
+
+  - repo: https://github.com/facebook/pyrefly-pre-commit
+    rev: 0.0.1
+    hooks:
+      - id: pyrefly-typecheck-system
+        name: Pyrefly (type checking)
+        pass_filenames: false
