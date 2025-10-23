@@ -25,11 +25,7 @@ repos:
       - id: sqlfluff-lint
         additional_dependencies:
           ["dbt-duckdb", "sqlfluff-templater-dbt", "deltalake[pyarrow]"]
-        entry: bash -c 'cd dbt && sqlfluff lint'
-        args:
-          - --dialect
-          - duckdb
-          - --verbose
+        entry: bash -c 'cd dbt && sqlfluff lint --verbose --dialect duckdb'
       - id: sqlfluff-fix
         additional_dependencies:
           ["dbt-duckdb", "sqlfluff-templater-dbt", "deltalake[pyarrow]"]
