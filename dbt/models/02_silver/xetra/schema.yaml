@@ -1,14 +1,15 @@
 models:
-  - name: gold_covid
-    description: "Gold Layer Table for COVID Data"
+  - name: silver_xetra
+    description: "Silver Layer Table for Xetra Data"
     meta:
       dagster:
-        group: gold
+        group: silver
     data_tests:
       - dbt_expectations.expect_table_row_count_to_be_between:
-          min_value: 1
+          arguments:
+            min_value: 1
     columns:
-      - name: meta_lastupdate
+      - name: trading_day
         description: "The primary key for this table"
         data_tests:
           - unique

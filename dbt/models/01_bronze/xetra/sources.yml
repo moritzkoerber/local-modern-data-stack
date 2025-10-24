@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: stocks
+    config:
+      plugin: delta
+    tables:
+      - name: xetra
+        meta:
+          delta_table_path: "/Users/moritz/Documents/local-modern-data-stack/data/bronze/xetra"
+          dagster:
+            asset_key: ["bronze", "raw_xetra"]
+        columns:
+          - name: "trading_day"
+            data_tests:
+              - not_null

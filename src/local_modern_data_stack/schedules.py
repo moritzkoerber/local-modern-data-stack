@@ -14,7 +14,7 @@ from .defs.jobs import full_load, partitioned_asset_job
 asset_partitioned_schedule = build_schedule_from_partitioned_job(partitioned_asset_job)
 
 daily_update_schedule = ScheduleDefinition(
-    name="daily_update_covid19_data_rki",
+    name="daily_update_xetra",
     job=full_load,
     cron_schedule="0 0 * * *",
     default_status=DefaultScheduleStatus.RUNNING,

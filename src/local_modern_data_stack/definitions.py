@@ -10,15 +10,20 @@ from dagster import Definitions
 from dagster_dbt import DbtCliResource
 from dagster_duckdb import DuckDBResource
 
-from .defs.assets.bronze import covid19_data_rki
+from .defs.assets.bronze import raw_xetra
 from .defs.assets.dbt import dbt_full_models, incremental_dbt_models
-from .defs.assets.presentation import cases_barchart
+from .defs.assets.presentation import xetra_closing_price_plot
 from .defs.jobs import full_load, partitioned_asset_job
 from .defs.resources import dbt_project
 from .schedules import schedules
 
 defs = Definitions(
-    assets=[covid19_data_rki, dbt_full_models, incremental_dbt_models, cases_barchart],
+    assets=[
+        raw_xetra,
+        dbt_full_models,
+        incremental_dbt_models,
+        xetra_closing_price_plot,
+    ],
     schedules=schedules,
     jobs=[full_load, partitioned_asset_job],
     # In Dagster, Resources are the external services, tools, and storage backends

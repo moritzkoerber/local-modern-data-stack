@@ -12,20 +12,26 @@ from .partitions import daily_partition
     kinds={"python"},
     partitions_def=daily_partition,
 )
-def covid19_data_rki() -> None:
-    response = requests.get("https://api.corona-zahlen.org/germany", timeout=180)
-    df = pl.json_normalize(response.json())
-    print(f"got {df.head()}")
+def raw_xetra() -> None:
+    response = requests.get(
+        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MBG.DEX&outputsize=full&apikey=demo",
+        timeout=180,
+    )
+    data = response.json()["Time Series (Daily)"]
+    df = pl.DataFrame([{"trading_day": k, **v} for k, v in data.items()])
+    print(f"Got {df.shape}")
+    print(df.head())
+
     try:
         df.write_delta(
-            "data/bronze/germany",
+            "data/bronze/xetra",
             mode="merge",
             delta_merge_options={
-                "predicate": "s.`meta.lastUpdate` = t.`meta.lastUpdate`",
+                "predicate": "s.trading_day = t.trading_day",
                 "source_alias": "s",
                 "target_alias": "t",
             },
         ).when_not_matched_insert_all().execute()
     except TableNotFoundError:
         # If the table doesn't exist, create it first
-        df.write_delta("data/bronze/germany", mode="overwrite")
+        df.write_delta("data/bronze/xetra", mode="overwrite")

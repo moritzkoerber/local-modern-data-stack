@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 import plotly.express as px
@@ -17,19 +16,21 @@ from .dbt import dbt_full_models
     kinds={"python"},
     group_name="presentation",
     key_prefix=["presentation"],
-    deps=[get_asset_key_for_model([dbt_full_models], "gold_covid")],
+    deps=[get_asset_key_for_model([dbt_full_models], "gold_xetra")],
 )
-def cases_barchart(context: AssetExecutionContext, duckdb: DuckDBResource) -> None:
+def xetra_closing_price_plot(
+    context: AssetExecutionContext, duckdb: DuckDBResource
+) -> None:
     with duckdb.get_connection() as conn:
-        cases = conn.sql("select * from main.gold_covid").pl()
+        cases = conn.sql("select * from main.gold_xetra").pl()
 
-        fig = px.bar(
-            cases, x="meta_lastupdate", y="cases", title="COVID Cases Over Time"
+        fig = px.line(
+            cases, x="date", y="closing_price", title="Xetra Closing Prices Over Time"
         )
         fig.update_layout(bargap=0.2)
-        save_chart_path = Path(duckdb.database).parent.joinpath("cases_chart.html")
-        fig.write_html(save_chart_path, auto_open=True)
+        save_chart_path = Path() / "closing_price_chart.html"
+        fig.write_html(save_chart_path)
 
         context.add_output_metadata(
-            {"plot_url": MetadataValue.url(f"file://{os.fspath(save_chart_path)}")}
+            {"plot_url": MetadataValue.url(f"file://{save_chart_path}")}
         )
