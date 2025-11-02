@@ -9,14 +9,14 @@ from dagster import (
 from dagster_dbt import get_asset_key_for_model
 from dagster_duckdb import DuckDBResource
 
-from .dbt import dbt_full_models
+from .dbt import incremental_dbt_models
 
 
 @asset(
     kinds={"python"},
     group_name="presentation",
     key_prefix=["presentation"],
-    deps=[get_asset_key_for_model([dbt_full_models], "gold_xetra")],
+    deps=[get_asset_key_for_model([incremental_dbt_models], "gold_xetra")],
 )
 def xetra_closing_price_plot(
     context: AssetExecutionContext, duckdb: DuckDBResource

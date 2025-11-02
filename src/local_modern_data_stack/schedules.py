@@ -5,19 +5,16 @@ materializing dbt models at specified times.
 
 from dagster import (
     DefaultScheduleStatus,
-    ScheduleDefinition,
     build_schedule_from_partitioned_job,
 )
 
-from .defs.jobs import full_load, partitioned_asset_job
+from .defs.jobs import partitioned_asset_job
 
-asset_partitioned_schedule = build_schedule_from_partitioned_job(partitioned_asset_job)
-
-daily_update_schedule = ScheduleDefinition(
-    name="daily_update_xetra",
-    job=full_load,
-    cron_schedule="0 0 * * *",
+partitioned_asset_job_schedule = build_schedule_from_partitioned_job(
+    job=partitioned_asset_job,
     default_status=DefaultScheduleStatus.RUNNING,
+    name="daily_update_xetra",
 )
 
-schedules = [asset_partitioned_schedule, daily_update_schedule]
+
+schedules = [partitioned_asset_job_schedule]
