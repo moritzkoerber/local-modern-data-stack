@@ -7,7 +7,7 @@ sources:
     tables:
       - name: xetra
         meta:
-          delta_table_path: "/Users/moritz/Documents/local-modern-data-stack/data/bronze/xetra"
+          delta_table_path: "../data/bronze/xetra"
           dagster:
             asset_key: ["bronze", "raw_xetra"]
         columns:
