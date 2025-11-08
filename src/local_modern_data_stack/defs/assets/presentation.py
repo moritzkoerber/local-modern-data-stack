@@ -21,6 +21,13 @@ from .dbt import incremental_dbt_models
 def xetra_closing_price_plot(
     context: AssetExecutionContext, duckdb: DuckDBResource
 ) -> None:
+    """
+    Generates a line plot of Xetra closing prices over time using Plotly and saves it as an HTML file.
+
+    Args:
+        context: The execution context provided by Dagster.
+        duckdb: The DuckDB resource for database interactions.
+    """
     with duckdb.get_connection() as conn:
         cases = conn.sql("select * from main.gold_xetra").pl()
 

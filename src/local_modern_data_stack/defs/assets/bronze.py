@@ -23,8 +23,7 @@ def raw_xetra(context: AssetExecutionContext) -> None:
     The asset is partitioned by day and merges new data with existing records.
 
     Args:
-        context (AssetExecutionContext): The execution context provided by
-            Dagster, containing partition information and logging capabilities.
+        context: The execution context provided by Dagster, containing partition information and logging capabilities.
     """
     start, end = context.partition_time_window
     logger.debug("Processing XETRA data from %s to %s", start, end)

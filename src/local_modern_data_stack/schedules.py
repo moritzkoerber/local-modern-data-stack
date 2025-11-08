@@ -11,5 +11,4 @@ partitioned_asset_job_schedule = build_schedule_from_partitioned_job(
     name="daily_update_xetra",
 )
 
-
 schedules = [partitioned_asset_job_schedule]
