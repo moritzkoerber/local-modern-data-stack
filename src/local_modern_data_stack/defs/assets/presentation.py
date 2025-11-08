@@ -3,7 +3,6 @@ from pathlib import Path
 import plotly.express as px
 from dagster import (
     AssetExecutionContext,
-    MetadataValue,
     asset,
 )
 from dagster_dbt import get_asset_key_for_model
@@ -29,15 +28,20 @@ def xetra_closing_price_plot(
         duckdb: The DuckDB resource for database interactions.
     """
     with duckdb.get_connection() as conn:
-        cases = conn.sql("select * from main.gold_xetra").pl()
+        closing_prices = conn.sql(
+            "SELECT * FROM main.gold_xetra ORDER BY trading_date ASC"
+        ).pl()
 
         fig = px.line(
-            cases, x="date", y="closing_price", title="Xetra Closing Prices Over Time"
+            closing_prices,
+            x="trading_date",
+            y="closing_price",
+            title="Xetra Closing Prices Over Time",
+            labels={
+                "trading_date": "Trading Date",
+                "closing_price": "Closing Price (EUR)",
+            },
         )
-        fig.update_layout(bargap=0.2)
-        save_chart_path = Path() / "closing_price_chart.html"
-        fig.write_html(save_chart_path)
 
-        context.add_output_metadata(
-            {"plot_url": MetadataValue.url(f"file://{save_chart_path}")}
-        )
+        save_chart_path = Path() / "presentation" / "closing_price_chart.html"
+        fig.write_html(save_chart_path)
