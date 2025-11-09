@@ -33,6 +33,18 @@ def incremental_dbt_models(
     | AssetCheckResult
     | AssetCheckEvaluation
 ]:
+    """Asset for incremental dbt models.
+
+    Runs dbt models materialized as 'incremental' within the specified partition time
+    window.
+
+    Args:
+        context: The execution context (partition information etc.).
+        dbt: The dbt CLI resource to run dbt commands.
+
+    Yields:
+        Outputs, materializations, observations, and check results from the dbt run.
+    """
     time_window = context.partition_time_window
     dbt_vars = {
         "start_date": time_window.start.strftime("%Y-%m-%d"),

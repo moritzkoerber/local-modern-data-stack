@@ -9,6 +9,8 @@ from .partitions import daily_partition
 
 logger = logging.getLogger(__name__)
 
+ALPHA_VANTAGE_API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MBG.DEX&outputsize=full&apikey=demo"
+
 
 @asset(
     group_name="bronze",
@@ -18,18 +20,19 @@ logger = logging.getLogger(__name__)
     backfill_policy=BackfillPolicy.single_run(),
 )
 def raw_xetra(context: AssetExecutionContext) -> None:
-    """
-    Fetches raw XETRA stock data from Alpha Vantage API and stores it in Delta Lake format.
-    The asset is partitioned by day and merges new data with existing records.
+    """Fetches XETRA stock data from API.
+
+    Fetches raw XETRA stock data from Alpha Vantage API and upserts it into a Delta
+    table. The asset is partitioned by day.
 
     Args:
-        context: The execution context provided by Dagster, containing partition information and logging capabilities.
+        context: The execution context (partition information etc.).
     """
     start, end = context.partition_time_window
     logger.debug("Processing XETRA data from %s to %s", start, end)
 
     response = requests.get(
-        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MBG.DEX&outputsize=full&apikey=demo",
+        ALPHA_VANTAGE_API_URL,
         timeout=180,
     )
     data = response.json()["Time Series (Daily)"]

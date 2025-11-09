@@ -1,10 +1,7 @@
 from pathlib import Path
 
 import plotly.express as px
-from dagster import (
-    AssetExecutionContext,
-    asset,
-)
+from dagster import asset
 from dagster_dbt import get_asset_key_for_model
 from dagster_duckdb import DuckDBResource
 
@@ -17,15 +14,14 @@ from .dbt import incremental_dbt_models
     key_prefix=["presentation"],
     deps=[get_asset_key_for_model([incremental_dbt_models], "gold_xetra")],
 )
-def xetra_closing_price_plot(
-    context: AssetExecutionContext, duckdb: DuckDBResource
-) -> None:
-    """
-    Generates a line plot of Xetra closing prices over time using Plotly and saves it as an HTML file.
+def xetra_closing_price_plot(duckdb: DuckDBResource) -> None:
+    """Generates a line plot of Xetra closing prices.
+
+    Generates a line plot of Xetra closing prices over time using Plotly. The plot is
+    saved as an HTML file in the presentation assets directory.
 
     Args:
-        context: The execution context provided by Dagster.
-        duckdb: The DuckDB resource for database interactions.
+        duckdb: DuckDB resource to query the gold_xetra table.
     """
     with duckdb.get_connection() as conn:
         closing_prices = conn.sql(

@@ -5,7 +5,6 @@
     on_schema_change = 'fail'
 ) }}
 
-
 SELECT
     CAST(trading_day AS TIMESTAMP) AS trading_day,
     CAST("1. open" AS FLOAT) AS opening_price,
