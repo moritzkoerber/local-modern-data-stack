@@ -45,8 +45,6 @@ select = [
     "A",   # built-ins
 ]
 
-ignore = ["E501", "B905"]
-
 [tool.ruff.lint.flake8-annotations]
 suppress-none-returning = true
 
@@ -60,7 +58,6 @@ registry_modules = ["local_modern_data_stack.components.*"]
 [tool.sqlfluff.core]
 dialect = "duckdb"
 templater = "dbt"
-exclude_rules = ["L031", "L034"]
 
 [tool.sqlfluff.templater.dbt]
 project_dir = "dbt"
