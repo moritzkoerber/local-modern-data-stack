@@ -1,6 +1,6 @@
 # Local modern data stack
 
-A simple project that demos duckdb and delta lake leveraged by dbt and orchestrated by Dagster. The stack queries Xetra data from an API and does an incremental load into a medallion architecture. Finally, a simply line chart is created via plotly. A schedule runs the whole pipeline once per day. Run the job to create a simple visualization.
+This project demos how to intgrate duckdb and delta lake into dbt orchestrated by Dagster. The stack once per day queries Xetra data from an API and does an incremental load into a medallion architecture. Finally, a simply line chart is created via Plotly.
 
 ## How to run
 
