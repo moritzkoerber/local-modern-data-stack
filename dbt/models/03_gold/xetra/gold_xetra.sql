@@ -10,5 +10,7 @@ SELECT
     closing_price
 FROM {{ ref('silver_xetra') }}
 {% if is_incremental() %}
-    WHERE trading_day >= '{{ var('start_date') }}' AND trading_day < '{{ var('end_date') }}'
+    WHERE
+        trading_day >= '{{ var('start_date') }}'
+        AND trading_day < '{{ var('end_date') }}'
 {% endif %}

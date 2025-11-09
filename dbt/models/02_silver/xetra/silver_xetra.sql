@@ -14,5 +14,7 @@ SELECT
     CAST("5. volume" AS FLOAT) AS trade_volume
 FROM {{ source("stocks", "xetra") }}
 {% if is_incremental() %}
-    WHERE trading_day >= '{{ var('start_date') }}' AND trading_day < '{{ var('end_date') }}'
+    WHERE
+        trading_day >= '{{ var('start_date') }}'
+        AND trading_day < '{{ var('end_date') }}'
 {% endif %}

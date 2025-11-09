@@ -63,6 +63,10 @@ templater = "dbt"
 project_dir = "dbt"
 profiles_dir = "dbt"
 
+[tool.sqlfluff.templater.dbt.context]
+start_date = "2025-10-27"
+end_date = "2025-10-28"
+
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "upper"
 
