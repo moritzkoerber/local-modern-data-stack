@@ -1,13 +1,13 @@
 from pathlib import Path
+from typing import Final
 
-import dagster as dg
 from dagster_dbt import DbtCliResource, DbtProject
+from dagster_duckdb import DuckDBResource
 
-dbt_project_directory = Path() / "dbt"
-dbt_project = DbtProject(project_dir=dbt_project_directory)
+DBT_PROJECT_DIR: Final = Path() / "dbt"
+DUCKDB_PATH: Final = Path() / "data/db.duckdb"
+
+dbt_project = DbtProject(project_dir=DBT_PROJECT_DIR)
 dbt_resource = DbtCliResource(project_dir=dbt_project)
 
-
-@dg.definitions
-def resources() -> dg.Definitions:
-    return dg.Definitions(resources={"dbt": dbt_resource})
+duckdb_resource = DuckDBResource(database=str(DUCKDB_PATH))
