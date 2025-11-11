@@ -1,4 +1,4 @@
-name: "duckdb"
+name: "xetra"
 version: "1.0.0"
 
 profile: "duckdb"
@@ -14,7 +14,8 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+flags:
+  send_anonymous_usage_stats: false
+
 models:
-  duckdb:
-    read:
-      +materialized: view
+  +materialized: table

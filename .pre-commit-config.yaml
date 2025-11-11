@@ -1,28 +1,38 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-toml
       - id: check-yaml
 
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.2
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.0
+    rev: v1.37.1
     hooks:
       - id: yamllint
+        args: [-d, "{rules: {document-start: disable}}"]
 
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.4.0
+    rev: 3.5.0
     hooks:
       - id: sqlfluff-lint
-        additional_dependencies: ["dbt-duckdb", "sqlfluff-templater-dbt"]
-        args:
-          - --dialect
-          - duckdb
-
+        additional_dependencies:
+          ["dbt-duckdb", "sqlfluff-templater-dbt", "deltalake[pyarrow]"]
+        entry: bash -c 'cd dbt && sqlfluff lint --dialect duckdb'
       - id: sqlfluff-fix
-        additional_dependencies: ["dbt-duckdb", "sqlfluff-templater-dbt"]
-        args:
-          - --dialect
-          - duckdb
+        additional_dependencies:
+          ["dbt-duckdb", "sqlfluff-templater-dbt", "deltalake[pyarrow]"]
+        entry: bash -c 'cd dbt && sqlfluff fix --dialect duckdb'
+
+  - repo: https://github.com/facebook/pyrefly-pre-commit
+    rev: 0.0.1
+    hooks:
+      - id: pyrefly-typecheck-system
+        pass_filenames: false

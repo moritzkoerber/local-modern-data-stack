@@ -1,6 +1,11 @@
 .DS_Store
-target/
-dbt_packages/
-logs/
-.user.yml
-*.parquet
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+dbt/test/
+dbt/.user.yml
+data/
+presentation/
+*.pyc
+*.egg-info/
+.tmp_dagster_home*

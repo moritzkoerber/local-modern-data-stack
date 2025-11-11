@@ -1,0 +1,16 @@
+models:
+  - name: gold_xetra
+    description: "Gold Layer Table for Xetra Data"
+    meta:
+      dagster:
+        group: gold
+    data_tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          arguments:
+            min_value: 1
+    columns:
+      - name: trading_date
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
