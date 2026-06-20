@@ -6,7 +6,7 @@ description = "A simple project that demos duckdb and delta lake leveraged by db
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "dagster~=1.10",
+    "dagster~=1.13",
     "dagster-dbt~=0.26",
     "dagster-duckdb~=0.26",
     "dbt-core~=1.9",
